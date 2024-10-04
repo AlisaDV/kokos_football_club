@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.user
 
+import com.dpds.kokos_football_club.exception.DetailsException
 import com.dpds.kokos_football_club.exception.NotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
@@ -15,6 +16,10 @@ class UserService @Autowired constructor(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder
 ) {
+
+    fun existByLogin(login: String): Boolean {
+        return userRepository.existsByLogin(login)
+    }
 
     fun getUserList(
         page: Int,
@@ -44,17 +49,19 @@ class UserService @Autowired constructor(
     }
 
     fun createUser(userRequest: UserRequest): User {
-        if(!userRepository.existsByLogin(userRequest.login)) {
-           throw NotFoundException("Пользователь не найден")
+        if(userRepository.existsByLogin(userRequest.login)) {
+           throw DetailsException("Пользователь уже существует")
         }
-        return User(
-            login = userRequest.login,
-            password = passwordEncoder.encode(userRequest.password),
-            firstName = userRequest.firstName,
-            lastName = userRequest.lastName,
-            email = userRequest.email,
-            age = userRequest.age,
-            role = UserRole.USER
+        return userRepository.save(
+            User(
+                login = userRequest.login,
+                password = passwordEncoder.encode(userRequest.password),
+                firstName = userRequest.firstName,
+                lastName = userRequest.lastName,
+                email = userRequest.email,
+                age = userRequest.age,
+                role = UserRole.USER
+            )
         )
     }
 

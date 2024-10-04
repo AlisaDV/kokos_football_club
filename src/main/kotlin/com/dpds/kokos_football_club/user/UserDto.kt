@@ -1,6 +1,7 @@
 package com.dpds.kokos_football_club.user
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.Size
 
 data class UserRequest (
@@ -18,6 +19,7 @@ data class UserRequest (
     val lastName: String,
     @JsonProperty("email")
     @Size(max = 200)
+    @Email
     val email: String,
     @JsonProperty("age")
     val age: Int,

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserRepository: CrudRepository<User, Long>, PagingAndSortingRepository<User, Long> {
     fun existsByLogin(login: String): Boolean
+    fun findByLogin(login: String): User?
 }

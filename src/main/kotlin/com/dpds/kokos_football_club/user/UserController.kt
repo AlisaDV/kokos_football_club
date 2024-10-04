@@ -106,7 +106,7 @@ class UserController @Autowired constructor(
         summary = "Разблокировать пользователя",
         tags = ["Пользователи"]
     )
-    @PatchMapping("/{id}/block")
+    @PatchMapping("/{id}/unblock")
     fun unblockUser(
         @Parameter(description = "ID пользователя") @PathVariable("id") id: Long,
     ): DetailsResponse {
