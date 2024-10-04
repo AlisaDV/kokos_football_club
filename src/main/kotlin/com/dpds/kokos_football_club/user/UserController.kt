@@ -113,4 +113,28 @@ class UserController @Autowired constructor(
         userService.unblockUser(id)
         return DetailsResponse("Пользователь успешно разблокирован")
     }
+
+    @Operation(
+        summary = "Дать права администратора",
+        tags = ["Пользователи"]
+    )
+    @PatchMapping("/{id}/give-admin")
+    fun giveAdminRights(
+        @Parameter(description = "ID пользователя") @PathVariable("id") id: Long,
+    ): DetailsResponse {
+        userService.giveAdminRights(id)
+        return DetailsResponse("Права успешно выданы")
+    }
+
+    @Operation(
+        summary = "Забрать права администратора",
+        tags = ["Пользователи"]
+    )
+    @PatchMapping("/{id}/take-admin")
+    fun takeAdminRights(
+        @Parameter(description = "ID пользователя") @PathVariable("id") id: Long,
+    ): DetailsResponse {
+        userService.takeAdminRights(id)
+        return DetailsResponse("Права успешно выданы")
+    }
 }

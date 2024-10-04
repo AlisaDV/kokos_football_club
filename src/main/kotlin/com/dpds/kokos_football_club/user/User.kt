@@ -17,5 +17,5 @@ class User (
     var isBlocked: Boolean = false,
     //TODO var img: String
     @Enumerated(EnumType.STRING)
-    val role: UserRole
+    var role: UserRole
 )

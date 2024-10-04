@@ -98,4 +98,16 @@ class UserService @Autowired constructor(
         user.isBlocked = false
         userRepository.save(user)
     }
+
+    fun giveAdminRights(id: Long) {
+        val user = getUser(id)
+        user.role = UserRole.ADMIN
+        userRepository.save(user)
+    }
+
+    fun takeAdminRights(id: Long) {
+        val user = getUser(id)
+        user.role = UserRole.USER
+        userRepository.save(user)
+    }
 }
