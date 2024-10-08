@@ -1,6 +1,7 @@
 package com.dpds.kokos_football_club.purchase
 
 import com.dpds.kokos_football_club.product.Product
+import com.dpds.kokos_football_club.user.User
 import jakarta.persistence.*
 import java.util.*
 
@@ -13,9 +14,11 @@ class Purchase (
     @Temporal(TemporalType.TIMESTAMP)
     val orderingTime: Calendar,
     @Temporal(TemporalType.TIMESTAMP)
-    val arrivalTime: Calendar,
+    val arrivalTime: Calendar?,
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "purchase")
     val products: MutableList<Product> = mutableListOf(),
     @Enumerated(EnumType.STRING)
-    val status: PurchaseStatus
+    val status: PurchaseStatus,
+    @ManyToOne
+    val user: User
 )

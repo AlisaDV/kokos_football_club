@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.product
 
+import com.dpds.kokos_football_club.product_cart.ProductCart
 import com.dpds.kokos_football_club.util.DetailsResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -10,7 +11,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/product")
 class ProductController @Autowired constructor(
-    private val productService: ProductService
+    private val productService: ProductService,
+
 ){
 
     @Operation(
@@ -38,7 +40,7 @@ class ProductController @Autowired constructor(
     )
     @GetMapping("/{id}/")
     fun getProduct(
-        @Parameter(description = "ID команды") @PathVariable("id") id: Long
+        @Parameter(description = "ID товара") @PathVariable("id") id: Long
     ): ProductResponse {
         val product = productService.getProduct(id)
         return ProductResponse(product)
@@ -60,7 +62,7 @@ class ProductController @Autowired constructor(
     )
     @PutMapping("/{id}/")
     fun updateProduct(
-        @Parameter(description = "ID команды") @PathVariable("id") id: Long,
+        @Parameter(description = "ID товара") @PathVariable("id") id: Long,
         @RequestBody productRequest: ProductRequest
     ): ProductResponse {
         val product = productService.updateProduct(id, productRequest)
@@ -73,9 +75,35 @@ class ProductController @Autowired constructor(
     )
     @DeleteMapping("/{id}/")
     fun deleteProduct(
-        @Parameter(description = "ID команды") @PathVariable("id") id: Long
+        @Parameter(description = "ID товара") @PathVariable("id") id: Long
     ): DetailsResponse {
         productService.deleteProduct(id)
         return DetailsResponse("Товар успешно удален")
     }
+
+    @Operation(
+        summary = "Добавить товар в корзину",
+        tags = ["Корзина"]
+    )
+    @PatchMapping("/{id}/add_to_cart/")
+    fun addProductToCart(
+        @Parameter(description = "ID товара") @PathVariable("id") id: Long
+    ): DetailsResponse {
+        productService.addProductToCart(id)
+        return DetailsResponse("Товар успешно добавлен в корзину")
+    }
+
+    @Operation(
+        summary = "Добавить товар в корзину",
+        tags = ["Корзина"]
+    )
+    @PatchMapping("/{id}/remove_from_cart/")
+    fun removeProductFromCart(
+        @Parameter(description = "ID товара") @PathVariable("id") id: Long
+    ): DetailsResponse {
+        productService.removeProductFromCart(id)
+        return DetailsResponse("Товар успешно убран из корзины")
+    }
+
+
 }

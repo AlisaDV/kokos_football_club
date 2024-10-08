@@ -21,6 +21,10 @@ class UserService @Autowired constructor(
         return userRepository.existsByLogin(login)
     }
 
+    fun getByLogin(login: String): User {
+        return userRepository.findByLogin(login) ?: throw NotFoundException("Пользователь не найден")
+    }
+
     fun getUserList(
         page: Int,
         pageSize: Int,

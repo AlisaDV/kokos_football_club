@@ -1,6 +1,7 @@
 package com.dpds.kokos_football_club.product;
 
 import com.dpds.kokos_football_club.exception.NotFoundException
+import com.dpds.kokos_football_club.product_cart.ProductCart
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class ProductService @Autowired constructor(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val productCart: ProductCart
 ){
 
     fun getProductList(
@@ -63,5 +65,15 @@ class ProductService @Autowired constructor(
 
     fun deleteProduct(id: Long) {
         productRepository.deleteById(id)
+    }
+
+    fun addProductToCart(id: Long) {
+        val product = getProduct(id)
+        productCart.products.add(product)
+    }
+
+    fun removeProductFromCart(id: Long) {
+        val product = getProduct(id)
+        productCart.products.remove(product)
     }
 }

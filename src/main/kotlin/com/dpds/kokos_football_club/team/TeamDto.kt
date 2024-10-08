@@ -4,8 +4,10 @@ import com.dpds.kokos_football_club.ex_player.ExPlayer
 import com.dpds.kokos_football_club.player.Player
 import com.dpds.kokos_football_club.product.Product
 import com.dpds.kokos_football_club.statistic.Statistic
+import com.dpds.kokos_football_club.statistic.StatisticResponse
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.Size
+import java.util.*
 
 data class TeamRequest(
     @JsonProperty("title")
@@ -74,7 +76,7 @@ data class TeamProfileResponse(
     @JsonProperty("ex_players")
     val exPlayers: List<ExPlayer>,
     @JsonProperty("statistic")
-    val statistic: Statistic?
+    val statistic: StatisticResponse?
 ) {
     constructor(team: Team): this(
         id = team.id,
@@ -83,6 +85,6 @@ data class TeamProfileResponse(
         description = team.description,
         players = team.players.toList(),
         exPlayers = team.exPlayers.toList(),
-        statistic = team.statistic
+        statistic = team.statistic?.let { StatisticResponse(it) }
     )
 }

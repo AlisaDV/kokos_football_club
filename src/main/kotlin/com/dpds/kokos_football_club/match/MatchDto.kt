@@ -27,12 +27,24 @@ data class MatchResponse(
     @JsonProperty("date")
     val date: Calendar,
     @JsonProperty("teams")
-    val teams: MutableList<Team> = mutableListOf()
+    val teams: MutableList<MatchTeamsResponse> = mutableListOf()
 ) {
     constructor(match: Match): this(
         id = match.id,
         title = match.title,
         date = match.date,
-        teams = match.teams
+        teams = match.teams.map { MatchTeamsResponse(it) }.toMutableList()
+    )
+}
+
+data class MatchTeamsResponse(
+    @JsonProperty("id")
+    val id: Long,
+    @JsonProperty("title")
+    val title: String
+) {
+    constructor(team: Team): this(
+        id = team.id,
+        title = team.title
     )
 }

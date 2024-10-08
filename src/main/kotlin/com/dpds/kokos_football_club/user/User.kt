@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.user
 
+import com.dpds.kokos_football_club.purchase.Purchase
 import jakarta.persistence.*
 
 @Entity
@@ -8,6 +9,7 @@ class User (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = -1L,
+    @Column(unique = true)
     val login: String,
     var password: String,
     var firstName: String,
@@ -17,5 +19,7 @@ class User (
     var isBlocked: Boolean = false,
     //TODO var img: String
     @Enumerated(EnumType.STRING)
-    var role: UserRole
+    var role: UserRole,
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")
+    var purchases: MutableList<Purchase> = mutableListOf()
 )

@@ -29,7 +29,7 @@ data class PlayerResponse(
     @JsonProperty("team")
     val team: Team?,
     @JsonProperty("ex_teams")
-    val exTeams: List<ExTeam>
+    val exTeams: MutableList<PlayerExTeamsResponse>
 ) {
     constructor(player: Player): this (
         id = player.id,
@@ -37,7 +37,7 @@ data class PlayerResponse(
         age = player.age,
         img = player.img,
         team = player.team,
-        exTeams = player.exTeams
+        exTeams = player.exTeams.map { PlayerExTeamsResponse(it) }.toMutableList()
     )
 }
 
@@ -46,3 +46,14 @@ data class AddToTeamRequest(
     val teamId: Long
 )
 
+data class PlayerExTeamsResponse(
+    @JsonProperty("id")
+    val id: Long,
+    @JsonProperty("title")
+    val title: String
+) {
+    constructor(exTeam: ExTeam): this(
+        id = exTeam.id,
+        title = exTeam.team.title
+    )
+}

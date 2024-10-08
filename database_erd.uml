@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.ex_players</OriginalElement>
+  <nodes>
+    <node x="396.65555555555557" y="266.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.match_teams</node>
+    <node x="46.0" y="212.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.players</node>
+    <node x="137.75" y="0.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.teams</node>
+    <node x="605.0" y="609.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.partners</node>
+    <node x="136.0" y="446.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.ex_teams</node>
+    <node x="240.65555555555557" y="245.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.match_results</node>
+    <node x="565.6555555555556" y="0.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.purchases</node>
+    <node x="0.0" y="609.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.users</node>
+    <node x="343.5888888888889" y="22.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.matches</node>
+    <node x="577.1555555555556" y="190.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.products</node>
+    <node x="0.0" y="446.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.ex_players</node>
+    <node x="205.0" y="609.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.publications</node>
+    <node x="400.0" y="609.0">82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.personals</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.players" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.teams">
+      <point x="0.0" y="-92.0" />
+      <point x="126.0" y="192.0" />
+      <point x="186.64999999999998" y="192.0" />
+      <point x="-32.60000000000002" y="81.0" />
+    </edge>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.match_results" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.teams">
+      <point x="-34.0" y="-59.0" />
+      <point x="274.65555555555557" y="192.0" />
+      <point x="251.84999999999997" y="192.0" />
+      <point x="32.599999999999966" y="81.0" />
+    </edge>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.products" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.purchases">
+      <point x="0.0" y="-92.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.ex_players" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.players">
+      <point x="29.0" y="-59.0" />
+      <point x="-40.0" y="92.0" />
+    </edge>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.ex_teams" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.players">
+      <point x="-29.0" y="-59.0" />
+      <point x="40.0" y="92.0" />
+    </edge>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.ex_players" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.teams">
+      <point x="-29.0" y="-59.0" />
+      <point x="29.0" y="421.0" />
+      <point x="33.394444444444446" y="421.0" />
+      <point x="33.394444444444446" y="182.0" />
+      <point x="154.05" y="182.0" />
+      <point x="-65.19999999999999" y="81.0" />
+    </edge>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.match_results" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.matches">
+      <point x="34.0" y="-59.0" />
+      <point x="342.65555555555557" y="192.0" />
+      <point x="379.5888888888889" y="192.0" />
+      <point x="-36.0" y="59.0" />
+    </edge>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.ex_teams" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.teams">
+      <point x="29.0" y="-59.0" />
+      <point x="223.0" y="421.0" />
+      <point x="219.89444444444445" y="421.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.match_teams" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.matches">
+      <point x="30.0" y="-38.0" />
+      <point x="486.65555555555557" y="192.0" />
+      <point x="451.5888888888889" y="192.0" />
+      <point x="36.0" y="59.0" />
+    </edge>
+    <edge source="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.match_teams" target="82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.teams">
+      <point x="-30.0" y="-38.0" />
+      <point x="426.65555555555557" y="182.0" />
+      <point x="284.45" y="182.0" />
+      <point x="65.19999999999999" y="81.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.41751990898748575" x="376.0" y="429.5" />
+  <SelectedNodes>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.ex_teams</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.matches</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.purchases</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.products</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.personals</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.match_teams</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.match_results</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.teams</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.ex_players</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.partners</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.players</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.users</node>
+    <node>82cefa2b-af82-4b9f-b3db-57d82d433709.TABLE:kokoc.public.publications</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
