@@ -36,6 +36,7 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:0.11.1")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.1")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.1")
+	implementation("org.imgscalr:imgscalr-lib:4.2")
 }
 
 kotlin {

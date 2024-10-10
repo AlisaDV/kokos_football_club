@@ -18,7 +18,7 @@ class Purchase (
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "purchase")
     val products: MutableList<Product> = mutableListOf(),
     @Enumerated(EnumType.STRING)
-    val status: PurchaseStatus,
+    var status: PurchaseStatus,
     @ManyToOne
     val user: User
 )

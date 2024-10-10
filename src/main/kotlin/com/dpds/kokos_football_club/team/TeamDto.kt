@@ -49,15 +49,15 @@ data class TeamResponse(
     val id: Long,
     @JsonProperty("title")
     val title: String,
-    @JsonProperty("img")
-    val img: String,
+    @JsonProperty("logo")
+    val logoId: Long?,
     @JsonProperty("description")
     val description: String,
 ) {
     constructor(team: Team): this(
         id = team.id,
         title = team.title,
-        img = team.img,
+        logoId = team.logo?.id,
         description = team.description,
     )
 }
@@ -67,8 +67,8 @@ data class TeamProfileResponse(
     val id: Long,
     @JsonProperty("title")
     val title: String,
-    @JsonProperty("img")
-    val img: String,
+    @JsonProperty("logo")
+    val logoId: Long?,
     @JsonProperty("description")
     val description: String,
     @JsonProperty("players")
@@ -81,7 +81,7 @@ data class TeamProfileResponse(
     constructor(team: Team): this(
         id = team.id,
         title = team.title,
-        img = team.img,
+        logoId = team.logo?.id,
         description = team.description,
         players = team.players.toList(),
         exPlayers = team.exPlayers.toList(),

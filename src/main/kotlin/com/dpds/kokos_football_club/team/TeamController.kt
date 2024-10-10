@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.team
 
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import com.dpds.kokos_football_club.partner.PartnerRequest
 import com.dpds.kokos_football_club.partner.PartnerService
 import com.dpds.kokos_football_club.partner.RemovePartnerRequest
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageImpl
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 
 
@@ -133,10 +135,11 @@ class TeamController @Autowired constructor(
     )
     @PatchMapping("/{id}/add_partner")
     fun addPartnerToTeam(
+        authentication: Authentication,
         @Parameter(description = "ID команды") @PathVariable("id") id: Long,
         @RequestBody partnerRequest: PartnerRequest
     ): DetailsResponse {
-        partnerService.addPartnerToTeam(id, partnerRequest)
+        partnerService.addPartnerToTeam(id, partnerRequest, authentication.name)
         return DetailsResponse("Спонсор успешно добавлен")
     }
 
@@ -151,6 +154,20 @@ class TeamController @Autowired constructor(
     ): DetailsResponse {
         partnerService.removePartnerFromTeam(id, removePartnerRequest)
         return DetailsResponse("Спонсор успешно убран")
+    }
+
+    @Operation(
+        summary = "Установить логотип",
+        tags = ["Изображения"]
+    )
+    @PatchMapping("/{id}/set-logo/")
+    fun setLogo(
+        authentication: Authentication,
+        @Parameter(description = "ID команды") @PathVariable("id") id: Long,
+        @RequestBody imageRequest: UploadImageRequest
+    ): DetailsResponse {
+        teamService.setLogo(authentication.name, id, imageRequest)
+        return DetailsResponse("Логотип успешно установлен")
     }
 
 }

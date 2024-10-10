@@ -1,6 +1,7 @@
 package com.dpds.kokos_football_club.match_result;
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 
-interface MatchResultRepository : JpaRepository<MatchResult, Long> {
+
+interface MatchResultRepository : CrudRepository<MatchResult, Long> {
 }

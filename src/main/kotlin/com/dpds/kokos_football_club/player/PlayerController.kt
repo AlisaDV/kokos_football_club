@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.player
 
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import com.dpds.kokos_football_club.user.UserOrdering
 import com.dpds.kokos_football_club.user.UserResponse
 import com.dpds.kokos_football_club.util.DetailsResponse
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.data.domain.PageImpl
 import org.springframework.http.HttpStatus
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.io.IOException
@@ -58,8 +60,11 @@ class PlayerController(
         tags = ["Игроки"]
     )
     @PostMapping("/")
-    fun createPlayer(@RequestBody playerRequest: PlayerRequest): PlayerResponse {
-        val player = playerService.createPlayer(playerRequest)
+    fun createPlayer(
+        authentication: Authentication,
+        @RequestBody playerRequest: PlayerRequest
+    ): PlayerResponse {
+        val player = playerService.createPlayer(playerRequest, authentication.name)
         return PlayerResponse(player)
     }
 
@@ -111,6 +116,20 @@ class PlayerController(
     ): DetailsResponse {
         playerService.removePlayerFromTeam(id)
         return DetailsResponse("Игрок успешно убран из команды")
+    }
+
+    @Operation(
+        summary = "Установить изображение",
+        tags = ["Изображения"]
+    )
+    @PatchMapping("/{id}/set-img/")
+    fun setImage(
+        authentication: Authentication,
+        @Parameter(description = "ID игрока") @PathVariable("id") id: Long,
+        @RequestBody imageRequest: UploadImageRequest
+    ): DetailsResponse {
+        playerService.setImage(authentication.name, id, imageRequest)
+        return DetailsResponse("Изображение успешно установлено")
     }
 
 }

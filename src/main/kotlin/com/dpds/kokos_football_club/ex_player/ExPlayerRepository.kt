@@ -1,6 +1,7 @@
 package com.dpds.kokos_football_club.ex_player;
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 
-interface ExPlayerRepository : JpaRepository<ExPlayer, Long> {
+
+interface ExPlayerRepository : CrudRepository<ExPlayer, Long> {
 }

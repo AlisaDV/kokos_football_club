@@ -36,6 +36,8 @@ data class UserResponse (
     val email: String,
     @JsonProperty("age")
     val age: Int,
+    @JsonProperty("avatar")
+    val avatarId: Long?
 ) {
     constructor(user: User): this (
         id = user.id,
@@ -43,6 +45,7 @@ data class UserResponse (
         fullName = user.firstName + " " + user.lastName,
         email = user.email,
         age = user.age,
+        avatarId = user.avatar?.id
     )
 }
 

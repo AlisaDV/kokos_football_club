@@ -1,6 +1,7 @@
 package com.dpds.kokos_football_club.player
 
 import com.dpds.kokos_football_club.ex_team.ExTeam
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import com.dpds.kokos_football_club.team.Team
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -12,7 +13,7 @@ data class PlayerRequest(
     @JsonProperty("age")
     val age: Int,
     @JsonProperty("image")
-    val img: String,
+    val img: UploadImageRequest?,
     @JsonProperty("team_id")
     val teamId: Long?
 )
@@ -25,7 +26,7 @@ data class PlayerResponse(
     @JsonProperty("age")
     val age: Int,
     @JsonProperty("image")
-    val img: String,
+    val imgId: Long?,
     @JsonProperty("team")
     val team: Team?,
     @JsonProperty("ex_teams")
@@ -35,7 +36,7 @@ data class PlayerResponse(
         id = player.id,
         fullName = player.firstName + " " + player.lastName,
         age = player.age,
-        img = player.img,
+        imgId = player.img?.id,
         team = player.team,
         exTeams = player.exTeams.map { PlayerExTeamsResponse(it) }.toMutableList()
     )

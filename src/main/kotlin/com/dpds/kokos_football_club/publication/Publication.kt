@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.publication
 
+import com.dpds.kokos_football_club.image.Image
 import jakarta.persistence.*
 import java.util.*
 
@@ -14,7 +15,11 @@ class Publication (
     var description: String,
     @Temporal(TemporalType.DATE)
     val datePublication: Calendar,
-    var img: String?,
+    @OneToOne
+    @JoinColumn(
+        name = "img_id"
+    )
+    var img: Image? = null,
     @Enumerated(EnumType.STRING)
     val type: PublicationType
 )

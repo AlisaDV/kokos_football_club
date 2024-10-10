@@ -25,10 +25,6 @@ class MatchService @Autowired constructor(
         ordering: MatchOrdering,
         search: String
     ): PageImpl<Match> {
-        val matches = matchRepository.findAll().filter {
-            it.title.lowercase().contains(search.lowercase())
-        }
-
         val sort = when (ordering) {
             MatchOrdering.ID_ASC -> Sort.by(Sort.Direction.ASC, "id")
             MatchOrdering.ID_DESC -> Sort.by(Sort.Direction.DESC, "id")
@@ -36,6 +32,9 @@ class MatchService @Autowired constructor(
             MatchOrdering.DATE_DESC -> Sort.by(Sort.Direction.DESC, "date")
         }
         val pageRequest = PageRequest.of(page, pageSize, sort)
+        val matches = matchRepository.findAll(pageRequest).filter {
+            it.title.lowercase().contains(search.lowercase())
+        }.toMutableList()
         return PageImpl(matches.drop(pageSize * page).take(pageSize), pageRequest, matches.size.toLong())
     }
 

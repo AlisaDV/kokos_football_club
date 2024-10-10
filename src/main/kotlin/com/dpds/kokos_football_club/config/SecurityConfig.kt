@@ -45,10 +45,7 @@ class SecurityConfig @Autowired constructor(
             .build()
     }
 
-    @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
+
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {

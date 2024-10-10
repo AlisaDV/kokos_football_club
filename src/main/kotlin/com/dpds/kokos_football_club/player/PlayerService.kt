@@ -6,6 +6,8 @@ import com.dpds.kokos_football_club.ex_team.ExTeam
 import com.dpds.kokos_football_club.ex_team.ExTeamRepository
 import com.dpds.kokos_football_club.exception.DetailsException
 import com.dpds.kokos_football_club.exception.NotFoundException
+import com.dpds.kokos_football_club.image.ImageService
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import com.dpds.kokos_football_club.team.TeamService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageImpl
@@ -19,7 +21,8 @@ class PlayerService @Autowired constructor(
     private val playerRepository: PlayerRepository,
     private val teamService: TeamService,
     private val exTeamRepository: ExTeamRepository,
-    private val exPlayerRepository: ExPlayerRepository
+    private val exPlayerRepository: ExPlayerRepository,
+    private val imageService: ImageService
 ){
 
 
@@ -29,11 +32,6 @@ class PlayerService @Autowired constructor(
         ordering: PlayerOrdering,
         search: String
     ): PageImpl<Player> {
-        val players = playerRepository.findAll().filter {
-                it.firstName.lowercase().contains(search.lowercase())
-                || it.lastName.lowercase().contains(search.lowercase())
-        }
-
         val sort = when(ordering) {
             PlayerOrdering.ID_ASC -> Sort.by(Sort.Direction.ASC, "id")
             PlayerOrdering.ID_DESC -> Sort.by(Sort.Direction.DESC, "id")
@@ -41,6 +39,10 @@ class PlayerService @Autowired constructor(
             PlayerOrdering.TEAM_DESC -> Sort.by(Sort.Direction.DESC, "team")
         }
         val pageRequest = PageRequest.of(page, pageSize, sort)
+        val players = playerRepository.findAll(pageRequest).filter {
+            it.firstName.lowercase().contains(search.lowercase())
+                    || it.lastName.lowercase().contains(search.lowercase())
+        }.toMutableList()
         return PageImpl(players.drop(pageSize * page).take(pageSize), pageRequest, players.size.toLong())
     }
 
@@ -48,7 +50,7 @@ class PlayerService @Autowired constructor(
         return playerRepository.findByIdOrNull(id) ?: throw NotFoundException("Пользователь не найден")
     }
 
-    fun createPlayer(playerRequest: PlayerRequest): Player {
+    fun createPlayer(playerRequest: PlayerRequest, login: String): Player {
 
         return playerRepository.save(
             Player(
@@ -56,7 +58,7 @@ class PlayerService @Autowired constructor(
                 lastName = playerRequest.lastName,
                 age = playerRequest.age,
                 team = playerRequest.teamId?.let { teamService.getTeam(it) },
-                img = playerRequest.img
+                img = playerRequest.img?.let { imageService.saveFile(login, it) }
             )
         )
     }
@@ -124,7 +126,12 @@ class PlayerService @Autowired constructor(
         if (team != null) {
             teamService.saveTeam(team)
         }
+    }
 
+    fun setImage(login: String, id: Long, avatarRequest: UploadImageRequest) {
+        val player = getPlayer(id)
+        player.img = imageService.saveFile(login, avatarRequest)
+        playerRepository.save(player)
     }
 
 }

@@ -1,11 +1,13 @@
 package com.dpds.kokos_football_club.product
 
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import com.dpds.kokos_football_club.product_cart.ProductCart
 import com.dpds.kokos_football_club.util.DetailsResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageImpl
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -51,8 +53,11 @@ class ProductController @Autowired constructor(
         tags = ["Товары"]
     )
     @PostMapping("/")
-    fun createProduct(@RequestBody productRequest: ProductRequest): ProductResponse {
-        val product = productService.createProduct(productRequest)
+    fun createProduct(
+        authentication: Authentication,
+        @RequestBody productRequest: ProductRequest
+    ): ProductResponse {
+        val product = productService.createProduct(productRequest, authentication.name)
         return ProductResponse(product)
     }
 
@@ -105,5 +110,18 @@ class ProductController @Autowired constructor(
         return DetailsResponse("Товар успешно убран из корзины")
     }
 
+    @Operation(
+        summary = "Установить изображение",
+        tags = ["Изображения"]
+    )
+    @PatchMapping("/{id}/set-img/")
+    fun setImage(
+        authentication: Authentication,
+        @Parameter(description = "ID товара") @PathVariable("id") id: Long,
+        @RequestBody imageRequest: UploadImageRequest
+    ): DetailsResponse {
+        productService.setImage(authentication.name, id, imageRequest)
+        return DetailsResponse("Изображение успешно установлено")
+    }
 
 }

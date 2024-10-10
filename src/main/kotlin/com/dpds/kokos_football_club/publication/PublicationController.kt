@@ -1,10 +1,14 @@
 package com.dpds.kokos_football_club.publication
 
+import com.dpds.kokos_football_club.image.UploadImageRequest
+import com.dpds.kokos_football_club.team.TeamRequest
+import com.dpds.kokos_football_club.team.TeamResponse
 import com.dpds.kokos_football_club.util.DetailsResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageImpl
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 
 
@@ -65,7 +69,20 @@ class PublicationController @Autowired constructor(
     }
 
     @Operation(
-        summary = "Обновить публикациб",
+        summary = "Создать публикацию",
+        tags = ["Публикации"]
+    )
+    @PostMapping("/")
+    fun createTeam(
+        authentication: Authentication,
+        @RequestBody publicationRequest: PublicationRequest
+    ): PublicationResponse {
+        val publication = publicationService.createPublication(publicationRequest, authentication.name)
+        return PublicationResponse(publication)
+    }
+
+    @Operation(
+        summary = "Обновить публикацию",
         tags = ["Публикации"]
     )
     @PutMapping("/{id}/")
@@ -88,5 +105,19 @@ class PublicationController @Autowired constructor(
         return DetailsResponse("Пользователь успешно удалён")
     }
 
+
+    @Operation(
+        summary = "Установить изображение",
+        tags = ["Изображения"]
+    )
+    @PatchMapping("/{id}/set-img/")
+    fun setImage(
+        authentication: Authentication,
+        @Parameter(description = "ID публикации") @PathVariable("id") id: Long,
+        @RequestBody imageRequest: UploadImageRequest
+    ): DetailsResponse {
+        publicationService.setImage(authentication.name, id, imageRequest)
+        return DetailsResponse("Изображение успешно установлено")
+    }
 
 }

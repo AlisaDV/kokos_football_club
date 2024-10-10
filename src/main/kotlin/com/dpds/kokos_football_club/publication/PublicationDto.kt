@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.publication
 
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 import jakarta.validation.constraints.Size
@@ -14,8 +15,7 @@ data class PublicationRequest(
     @JsonProperty("date_publication")
     val datePublication: Calendar,
     @JsonProperty("image")
-    @Size(max = 200)
-    val img: String?,
+    val img: UploadImageRequest?,
     @JsonProperty("type")
     val type: PublicationType
 )
@@ -30,14 +30,14 @@ data class PublicationResponse(
     @JsonProperty("date_publication")
     val datePublication: Calendar,
     @JsonProperty("image")
-    val img: String?,
+    val imgId: Long?,
 ) {
     constructor(publication: Publication): this (
         id = publication.id,
         title = publication.title,
         description = publication.description,
         datePublication = publication.datePublication,
-        img = publication.img
+        imgId = publication.img?.id
     )
 }
 
@@ -47,7 +47,4 @@ data class UpdatePublicationRequest(
     val title: String,
     @JsonProperty("description")
     val description: String,
-    @JsonProperty("image")
-    @Size(max = 200)
-    val img: String?,
 )

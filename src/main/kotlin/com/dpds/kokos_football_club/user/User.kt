@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.user
 
+import com.dpds.kokos_football_club.image.Image
 import com.dpds.kokos_football_club.purchase.Purchase
 import jakarta.persistence.*
 
@@ -17,7 +18,11 @@ class User (
     var email: String,
     var age: Int,
     var isBlocked: Boolean = false,
-    //TODO var img: String
+    @OneToOne
+    @JoinColumn(
+        name = "avatar_id"
+    )
+    var avatar: Image? = null,
     @Enumerated(EnumType.STRING)
     var role: UserRole,
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user")

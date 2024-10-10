@@ -2,6 +2,8 @@ package com.dpds.kokos_football_club.user
 
 import com.dpds.kokos_football_club.exception.DetailsException
 import com.dpds.kokos_football_club.exception.NotFoundException
+import com.dpds.kokos_football_club.image.ImageService
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
@@ -14,7 +16,8 @@ import org.springframework.stereotype.Service
 @Service
 class UserService @Autowired constructor(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
+    private val imageService: ImageService
 ) {
 
     fun existByLogin(login: String): Boolean {
@@ -112,6 +115,12 @@ class UserService @Autowired constructor(
     fun takeAdminRights(id: Long) {
         val user = getUser(id)
         user.role = UserRole.USER
+        userRepository.save(user)
+    }
+
+    fun setAvatar( id: Long, avatarRequest: UploadImageRequest) {
+        val user = getUser(id)
+        user.avatar = imageService.saveFile(user.login, avatarRequest)
         userRepository.save(user)
     }
 }

@@ -1,6 +1,8 @@
 package com.dpds.kokos_football_club.team;
 
 import com.dpds.kokos_football_club.exception.NotFoundException
+import com.dpds.kokos_football_club.image.ImageService
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import com.dpds.kokos_football_club.statistic.Statistic
 import com.dpds.kokos_football_club.statistic.StatisticRepository
 import com.dpds.kokos_football_club.statistic.StatisticRequest
@@ -14,7 +16,8 @@ import org.springframework.stereotype.Service
 @Service
 class TeamService @Autowired constructor(
     private val teamRepository: TeamRepository,
-    private val statisticRepository: StatisticRepository
+    private val statisticRepository: StatisticRepository,
+    private val imageService: ImageService
 ){
 
     fun getTeamList(
@@ -23,10 +26,6 @@ class TeamService @Autowired constructor(
         ordering: TeamOrdering,
         search: String
     ): PageImpl<Team> {
-        val teams = teamRepository.findAll().filter {
-            it.title.lowercase().contains(search.lowercase())
-        }
-
         val sort = when(ordering) {
             TeamOrdering.ID_ASC -> Sort.by(Sort.Direction.ASC, "id")
             TeamOrdering.ID_DESC -> Sort.by(Sort.Direction.DESC, "id")
@@ -34,6 +33,9 @@ class TeamService @Autowired constructor(
             TeamOrdering.TITLE_DESC -> Sort.by(Sort.Direction.DESC, "title")
         }
         val pageRequest = PageRequest.of(page, pageSize, sort)
+        val teams = teamRepository.findAll(pageRequest).filter {
+            it.title.lowercase().contains(search.lowercase())
+        }.toMutableList()
         return PageImpl(teams.drop(pageSize * page).take(pageSize), pageRequest, teams.size.toLong())
     }
 
@@ -49,7 +51,6 @@ class TeamService @Autowired constructor(
         return saveTeam(
             Team(
                 title = teamRequest.title,
-                img = teamRequest.img,
                 description = teamRequest.description,
                 statistic = null
             )
@@ -60,7 +61,6 @@ class TeamService @Autowired constructor(
         val team = getTeam(id)
         team.title = teamRequest.title
         team.description = teamRequest.description
-        team.img = teamRequest.img
         return saveTeam(team)
     }
 
@@ -83,6 +83,10 @@ class TeamService @Autowired constructor(
         teamRepository.save(team)
     }
 
-
+    fun setLogo(login: String, teamId: Long, avatarRequest: UploadImageRequest) {
+        val team = getTeam(teamId)
+        team.logo = imageService.saveFile(login, avatarRequest)
+        teamRepository.save(team)
+    }
 
 }

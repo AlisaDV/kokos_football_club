@@ -1,6 +1,7 @@
 package com.dpds.kokos_football_club.personal;
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 
-interface PersonalRepository : JpaRepository<Personal, Long> {
+
+interface PersonalRepository : CrudRepository<Personal, Long> {
 }

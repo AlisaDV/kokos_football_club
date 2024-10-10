@@ -36,3 +36,8 @@ data class PurchaseProductsResponse(
         title = product.title
     )
 }
+
+data class ChangePurchaseStatusRequest(
+    @JsonProperty("status")
+    val status: PurchaseStatus
+)

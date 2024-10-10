@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.partner
 
+import com.dpds.kokos_football_club.image.Image
 import com.dpds.kokos_football_club.team.Team
 import jakarta.persistence.*
 
@@ -10,7 +11,11 @@ class Partner (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = -1L,
     val title: String,
-    val img: String,
+    @OneToOne
+    @JoinColumn(
+        name = "img_id"
+    )
+    var img: Image? = null,
     val donate: Int,
     @ManyToOne
     val team: Team

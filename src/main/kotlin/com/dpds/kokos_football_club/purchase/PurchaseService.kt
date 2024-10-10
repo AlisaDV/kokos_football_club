@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.purchase;
 
+import com.dpds.kokos_football_club.exception.NotFoundException
 import com.dpds.kokos_football_club.product_cart.ProductCart
 import com.dpds.kokos_football_club.user.User
 import com.dpds.kokos_football_club.user.UserOrdering
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -25,8 +27,6 @@ class PurchaseService @Autowired constructor(
         ordering: PurchaseOrdering,
         search: String
     ): PageImpl<Purchase> {
-        val purchases = purchaseRepository.findAll().filter {it.status.name.lowercase().contains(search.lowercase()) }
-
         val sort = when(ordering) {
             PurchaseOrdering.ID_ASC -> Sort.by(Sort.Direction.ASC, "id")
             PurchaseOrdering.ID_DESC -> Sort.by(Sort.Direction.DESC, "id")
@@ -38,6 +38,7 @@ class PurchaseService @Autowired constructor(
             PurchaseOrdering.ARRIVAL_TIME_DESC -> Sort.by(Sort.Direction.DESC, "arrivalTime")
         }
         val pageRequest = PageRequest.of(page, pageSize, sort)
+        val purchases = purchaseRepository.findAll(pageRequest).filter {it.status.name.lowercase().contains(search.lowercase()) }.toMutableList()
         return PageImpl(purchases.drop(pageSize * page).take(pageSize), pageRequest, purchases.size.toLong())
     }
 
@@ -54,6 +55,12 @@ class PurchaseService @Autowired constructor(
         user.purchases.add(purchase)
         productCart.products.clear()
         return purchaseRepository.save(purchase)
+    }
+
+    fun changeStatus(id: Long, changePurchaseStatusRequest: ChangePurchaseStatusRequest) {
+        val purchase = purchaseRepository.findByIdOrNull(id) ?: throw NotFoundException("Заказ не найден")
+        purchase.status = changePurchaseStatusRequest.status
+        purchaseRepository.save(purchase)
     }
 
 }

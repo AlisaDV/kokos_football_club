@@ -1,6 +1,7 @@
 package com.dpds.kokos_football_club.partner;
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 
-interface PartnerRepository : JpaRepository<Partner, Long> {
+
+interface PartnerRepository : CrudRepository<Partner, Long> {
 }

@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.product
 
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class ProductRequest(
@@ -9,8 +10,8 @@ data class ProductRequest(
     val description: String,
     @JsonProperty("price")
     val price: Int,
-    @JsonProperty("img")
-    val img: String
+    @JsonProperty("image")
+    val img: UploadImageRequest?,
 )
 
 data class ProductResponse(
@@ -22,14 +23,14 @@ data class ProductResponse(
     val description: String,
     @JsonProperty("price")
     val price: Int,
-    @JsonProperty("img")
-    val img: String
+    @JsonProperty("image")
+    val imgId: Long?,
 ) {
     constructor(product: Product): this(
         id = product.id,
         title = product.title,
         description = product.description,
         price = product.price,
-        img = product.img
+        imgId = product.img?.id
     )
 }

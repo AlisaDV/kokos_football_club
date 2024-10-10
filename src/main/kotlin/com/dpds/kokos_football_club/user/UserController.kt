@@ -1,5 +1,6 @@
 package com.dpds.kokos_football_club.user
 
+import com.dpds.kokos_football_club.image.UploadImageRequest
 import com.dpds.kokos_football_club.util.DetailsResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -136,5 +137,18 @@ class UserController @Autowired constructor(
     ): DetailsResponse {
         userService.takeAdminRights(id)
         return DetailsResponse("Права успешно выданы")
+    }
+
+    @Operation(
+        summary = "Установить аватар",
+        tags = ["Изображения"]
+    )
+    @PatchMapping("/{id}/set-avatar/")
+    fun setAvatar(
+        @Parameter(description = "ID пользователя") @PathVariable("id") id: Long,
+        @RequestBody imageRequest: UploadImageRequest
+    ): DetailsResponse {
+        userService.setAvatar(id, imageRequest)
+        return DetailsResponse("Аватар успешно установлен")
     }
 }

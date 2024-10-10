@@ -1,6 +1,7 @@
 package com.dpds.kokos_football_club.statistic;
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 
-interface StatisticRepository : JpaRepository<Statistic, Long> {
+
+interface StatisticRepository : CrudRepository<Statistic, Long> {
 }
