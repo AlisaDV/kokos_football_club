@@ -34,11 +34,6 @@ class UserService @Autowired constructor(
         ordering: UserOrdering,
         search: String
     ): Page<User> {
-        val users = userRepository.findAll().filter {it.login.lowercase().contains(search.lowercase())
-                || it.firstName.lowercase().contains(search.lowercase())
-                || it.lastName.lowercase().contains(search.lowercase())
-        }
-
         val sort = when(ordering) {
             UserOrdering.ID_ASC -> Sort.by(Sort.Direction.ASC, "id")
             UserOrdering.ID_DESC -> Sort.by(Sort.Direction.DESC, "id")
@@ -48,6 +43,10 @@ class UserService @Autowired constructor(
             UserOrdering.AGE_DESC -> Sort.by(Sort.Direction.DESC, "age")
         }
         val pageRequest = PageRequest.of(page, pageSize, sort)
+        val users = userRepository.findAll(pageRequest).filter {it.login.lowercase().contains(search.lowercase())
+                || it.firstName.lowercase().contains(search.lowercase())
+                || it.lastName.lowercase().contains(search.lowercase())
+        }.toMutableList()
         return PageImpl(users.drop(pageSize * page).take(pageSize), pageRequest, users.size.toLong())
     }
 
